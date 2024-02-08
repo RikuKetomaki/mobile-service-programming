@@ -47,9 +47,19 @@ export default Gameboard = () => {
             setNbrOfThrowsLeft(NBR_OF_THROWS);
             setNbrOfWins(0);
         }
-        checkWinner();
     }
 
+
+    useEffect(() => {
+        checkWinner();
+        if (nbrOfThrowsLeft === NBR_OF_THROWS) {
+            setStatus('Game has not started')
+        }
+        if (nbrOfThrowsLeft < 0) {
+            setNbrOfThrowsLeft(NBR_OF_THROWS-1);
+            setNbrOfWins(0);
+        }
+    }, [nbrOfThrowsLeft])
 
     //useEffect not working because asynchronous befaviour, code added to trowDice() function instead
     // useEffect(() => {
