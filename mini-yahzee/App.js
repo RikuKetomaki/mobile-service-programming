@@ -41,6 +41,7 @@ export default function App() {
           tabBarInactiveTintColor: 'gray',
         })}
       >
+        {/* tabBarStyle täytyy ehkä muuttaa */}
         <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: "none"}}} />
         <Tab.Screen name="Gameboard" component={Gameboard} />
         <Tab.Screen name="Scoreboard" component={Scoreboard} />
