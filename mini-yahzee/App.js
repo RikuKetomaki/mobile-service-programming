@@ -1,11 +1,6 @@
-import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/bottom-tabs'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import style from './styles/Style';
-import Game from './constants/Game';
 import Gameboard from './components/Gameboard';
 import Scoreboard from './components/Scoreboard';
 // You can import Ionicons from @expo/vector-icons/Ionicons if you use Expo or
