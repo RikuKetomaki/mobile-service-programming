@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Gameboard from './components/Gameboard';
 import Scoreboard from './components/Scoreboard';
+import Home from './components/Home';
 // You can import Ionicons from @expo/vector-icons/Ionicons if you use Expo or
 // react-native-vector-icons/Ionicons otherwise.
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -40,7 +41,7 @@ export default function App() {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} options={{tabBarStyle: {display: "none"}}} />
+        <Tab.Screen name="Home" component={Home} options={{tabBarStyle: {display: "none"}}} />
         <Tab.Screen name="Gameboard" component={Gameboard} />
         <Tab.Screen name="Scoreboard" component={Scoreboard} />
       </Tab.Navigator>
