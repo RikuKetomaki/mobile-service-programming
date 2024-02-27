@@ -8,12 +8,12 @@ export default StyleSheet.create({
   header: {
     marginTop: 30,
     marginBottom: 15,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#D190DE',
     flexDirection: 'row',
   },
   footer: {
     marginTop: 20,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#D190DE',
     flexDirection: 'row'
   },
   title: {
@@ -51,11 +51,15 @@ export default StyleSheet.create({
   flex: {
     flexDirection: "row"
   },
+  spottext: {
+    alignSelf: "center",
+    justifyContent: 'center'
+  },
   button: {
     margin: 30,
     flexDirection: "row",
     padding: 10,
-    backgroundColor: "#73CED6",
+    backgroundColor: "#BE82C9",
     width: 150,
     borderRadius: 15,
     justifyContent: 'center',

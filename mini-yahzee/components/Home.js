@@ -29,6 +29,11 @@ export default function Home ({navigation}) {
         <>
             <Header/>
             <View>
+                <MaterialCommunityIcons 
+                    name="information"
+                    size={90}
+                    color="purple"
+                />
                 {!hasPlayerName ?
                 <>
                 <Text>For scoreboard enter your name...</Text>
