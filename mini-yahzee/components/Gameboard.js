@@ -15,6 +15,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Col, Container, Row } from 'react-native-flex-grid';
 
 let board =[];
+let boardValues=[];
 
 export default function Gameboard ({navigation, route}) {
 
@@ -39,7 +40,7 @@ export default function Gameboard ({navigation, route}) {
         useState(new Array(MAX_SPOT).fill(0));
 
     const [spotPoints, setSpotPoints] =
-        useState(new Array(MIN_SPOT).fill(0));
+        useState(new Array(MAX_SPOT).fill(0));
 
     const [selectedSpots, setSelectedSpots] =
         useState(new Array(MAX_SPOT).fill(false));
@@ -70,12 +71,26 @@ export default function Gameboard ({navigation, route}) {
         );
     }
 
+    function getDiceColor(i) {
+        return selectedDices[i] ? "black" : "purple";
+    }
+
+    const selectDice = (i) => {
+        if (nbrOfThrowsLeft < NBR_OF_THROWS && !gameEndStatus) {
+            let dices = [...selectedDices];
+            dices[i] = selectedDices[i] ? false : true;
+            setSelectedDices(dices)
+         } else {
+             setStatus("You have to throw dices first");
+         }
+    }
+    
     const spotRow = [];
     for (let spot = 0; spot < MAX_SPOT; spot++) {
         let iconNumber = spot+1
         spotRow.push(
             <Col key={"spot" + spot}>
-                <Text style={Style.spottext}>{spotPoints}</Text>
+                <Text style={Style.spottext}>{spotPoints[spot]}</Text>
                 <Pressable
                     key={"spot" + spot}
                      onPress={() => selectSpot(spot)}                 
@@ -92,29 +107,27 @@ export default function Gameboard ({navigation, route}) {
         );
     }
 
-    function getDiceColor(i) {
-        return selectedDices[i] ? "black" : "purple";
-    }
     function getSpotColor(i) {
-        return selectedDicePoints[i] ? "black" : "purple";
-    }
-
-    const selectDice = (i) => {
-        if (nbrOfThrowsLeft < NBR_OF_THROWS && !gameEndStatus) {
-            let dices = [...selectedDices];
-            dices[i] = selectedDices[i] ? false : true;
-            setSelectedDices(dices)
-         } else {
-             setStatus("You have to throw dices first");
-         }
+        return selectedSpots[i] ? "black" : "purple";
     }
 
     const selectSpot = (i) => {
-        if (nbrOfThrowsLeft == 0) {
+        if (nbrOfThrowsLeft == 0 && selectedSpots[i] == false) {
             let spots = [...selectedSpots];
             spots[i] = selectedSpots[i] ? false : true;
             setSelectedSpots(spots)
-            console.log("spot "+spots+" selected")
+
+            let instancesInBoard = 0;
+            const spotValue = i + 1 
+            for (let j = 0; j < boardValues.length; j++) {
+                if (boardValues[j] == spotValue) {
+                    instancesInBoard = instancesInBoard+1
+                }
+            }
+
+            let points = [...spotPoints];
+            points[i] = spotValue * instancesInBoard;
+            setSpotPoints(points)
         } else {
             setStatus("You have to throw dices 3 times first")
         }
@@ -126,6 +139,7 @@ export default function Gameboard ({navigation, route}) {
             if (!selectedDices[i]) {
                 let randomNumber = Math.floor(Math.random() * 6 + 1);
                 board[i] = 'dice-' + randomNumber;
+                boardValues[i] = randomNumber;
             }
         }
         //CHECK THIS IS CORRECT!!!
