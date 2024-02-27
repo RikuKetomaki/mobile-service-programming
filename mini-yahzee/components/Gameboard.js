@@ -23,6 +23,8 @@ export default function Gameboard ({navigation, route}) {
     const [nbrOfThrowsLeft, setNbrOfThrowsLeft] = useState(NBR_OF_THROWS);
     const [status, setStatus] =useState('Throw dices');
     const [gameEndStatus, setGameEndStatus] = useState(false);
+    const [turn, setTurn] = useState (0);
+    const [totalPoints, setTotalPoints] = useState(0);
 
     //Are dices selected or not
     const [selectedDices, setSelectedDices] = 
@@ -112,7 +114,7 @@ export default function Gameboard ({navigation, route}) {
     }
 
     const selectSpot = (i) => {
-        if (nbrOfThrowsLeft == 0 && selectedSpots[i] == false) {
+        if (nbrOfThrowsLeft <= 0 && selectedSpots[i] == false) {
             let spots = [...selectedSpots];
             spots[i] = selectedSpots[i] ? false : true;
             setSelectedSpots(spots)
@@ -125,9 +127,14 @@ export default function Gameboard ({navigation, route}) {
                 }
             }
 
+            let pointsAmount = spotValue * instancesInBoard
             let points = [...spotPoints];
-            points[i] = spotValue * instancesInBoard;
-            setSpotPoints(points)
+            points[i] = pointsAmount;
+            setSpotPoints(points);
+            setTurn(turn + 1);
+            setTotalPoints(totalPoints + pointsAmount);
+            setNbrOfThrowsLeft(NBR_OF_THROWS);
+            selectedDices.fill(false)
         } else {
             setStatus("You have to throw dices 3 times first")
         }
@@ -135,26 +142,36 @@ export default function Gameboard ({navigation, route}) {
 
     //CHECK RECORDING FOR FUNCTION
     const throwDices = () => {
-        for (let i = 0; i < NBR_OF_DICES; i++) {
-            if (!selectedDices[i]) {
-                let randomNumber = Math.floor(Math.random() * 6 + 1);
-                board[i] = 'dice-' + randomNumber;
-                boardValues[i] = randomNumber;
-            }
+        if (nbrOfThrowsLeft <= 0) {
+            setStatus("Please, add points first")
+            return
+        } else if (turn >= 6) {
+            setGameEndStatus(true);
+            setStatus("Game ended");
+            return
         }
-        //CHECK THIS IS CORRECT!!!
-        setNbrOfThrowsLeft(nbrOfThrowsLeft-1)
+            for (let i = 0; i < NBR_OF_DICES; i++) {
+                if (!selectedDices[i]) {
+                    let randomNumber = Math.floor(Math.random() * 6 + 1);
+                    board[i] = 'dice-' + randomNumber;
+                    boardValues[i] = randomNumber;
+                }
+            }
+            //CHECK THIS IS CORRECT!!!
+            setNbrOfThrowsLeft(nbrOfThrowsLeft-1)
     }
     
     return (
         <>
             <Header />
             <View style={Style.gameboard}>
+                <Text>Turn: {turn}</Text>
                 <Container fluid>
                     <Row>{dicesRow}</Row>
                 </Container>
                 <Text style={Style.gameinfo}>Throws left: {nbrOfThrowsLeft}</Text>
                 <Text style={Style.gameinfo}>{status}</Text>
+                <Text style={Style.gameinfo}> Total points: {totalPoints}</Text>
                 <Pressable style={Style.button}
                     onPress={() => throwDices()}>
                         <Text style={Style.buttonText}>Throw dices</Text>
