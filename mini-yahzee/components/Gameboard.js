@@ -191,7 +191,7 @@ export default function Gameboard ({navigation, route}) {
                     onPress={() => throwDices()}>
                         <Text style={Style.buttonText}>{throwDicesButtonText}</Text>
                 </Pressable>
-                <Text>Player: {playerName}</Text>
+                <Text style={Style.playername}>Player: {playerName}</Text>
                 <Container fluid>
                     <Row>{spotRow}</Row>
                 </Container>

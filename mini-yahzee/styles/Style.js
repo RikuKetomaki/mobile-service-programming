@@ -38,11 +38,17 @@ export default StyleSheet.create({
     justifyContent: 'center'
   },
   gameinfo: {
-    backgroundColor: '#fff',
     textAlign: 'center',
     justifyContent: 'center',
     fontSize: 20,
     marginTop: 10
+  },
+  playername: {
+    textAlign: 'center',
+    justifyContent: 'center',
+    fontSize: 20,
+    marginTop: 10,
+    marginBottom: 30,
   },
   row: {
     marginTop: 20,
