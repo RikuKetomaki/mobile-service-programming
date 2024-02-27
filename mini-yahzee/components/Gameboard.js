@@ -25,6 +25,7 @@ export default function Gameboard ({navigation, route}) {
     const [gameEndStatus, setGameEndStatus] = useState(false);
     const [turn, setTurn] = useState (0);
     const [totalPoints, setTotalPoints] = useState(0);
+    const [throwDicesButtonText, setThrowDicesButtonText] = useState('Start game')
 
     //Are dices selected or not
     const [selectedDices, setSelectedDices] = 
@@ -52,6 +53,13 @@ export default function Gameboard ({navigation, route}) {
             setPlayerName(route.params.player);
         }
     }, []);
+
+    useEffect(() => {
+        if (turn >= 6) {
+            setThrowDicesButtonText("New game")
+            setStatus("Game Over")
+        }
+    }, [turn])
 
     const dicesRow = [];
     for (let dice = 0; dice < NBR_OF_DICES; dice++) {
@@ -134,20 +142,27 @@ export default function Gameboard ({navigation, route}) {
             setTurn(turn + 1);
             setTotalPoints(totalPoints + pointsAmount);
             setNbrOfThrowsLeft(NBR_OF_THROWS);
-            selectedDices.fill(false)
+            selectedDices.fill(false);
+
         } else {
             setStatus("You have to throw dices 3 times first")
         }
     }
 
-    //CHECK RECORDING FOR FUNCTION
     const throwDices = () => {
         if (nbrOfThrowsLeft <= 0) {
             setStatus("Please, add points first")
             return
         } else if (turn >= 6) {
-            setGameEndStatus(true);
-            setStatus("Game ended");
+            setGameEndStatus(false);
+            setStatus("Throw Dices");
+            setNbrOfThrowsLeft(NBR_OF_THROWS);
+            selectedDices.fill(false);
+            setTurn(0);
+            spotPoints.fill(0);
+            setTotalPoints(0);
+            selectedSpots.fill(false);
+            setThrowDicesButtonText("Star Game")
             return
         }
             for (let i = 0; i < NBR_OF_DICES; i++) {
@@ -157,8 +172,8 @@ export default function Gameboard ({navigation, route}) {
                     boardValues[i] = randomNumber;
                 }
             }
-            //CHECK THIS IS CORRECT!!!
             setNbrOfThrowsLeft(nbrOfThrowsLeft-1)
+            setThrowDicesButtonText("Throw Dices")
     }
     
     return (
@@ -174,7 +189,7 @@ export default function Gameboard ({navigation, route}) {
                 <Text style={Style.gameinfo}> Total points: {totalPoints}</Text>
                 <Pressable style={Style.button}
                     onPress={() => throwDices()}>
-                        <Text style={Style.buttonText}>Throw dices</Text>
+                        <Text style={Style.buttonText}>{throwDicesButtonText}</Text>
                 </Pressable>
                 <Text>Player: {playerName}</Text>
                 <Container fluid>

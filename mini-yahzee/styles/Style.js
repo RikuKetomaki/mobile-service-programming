@@ -20,7 +20,7 @@ export default StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     flex: 1,
-    fontSize: 23,
+    fontSize: 30,
     textAlign: 'center',
     margin: 10,
   },
@@ -57,7 +57,6 @@ export default StyleSheet.create({
   },
   button: {
     margin: 30,
-    flexDirection: "row",
     padding: 10,
     backgroundColor: "#BE82C9",
     width: 150,
@@ -66,7 +65,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   buttonText: {
-    color:"#2B2B52",
+    color:"white",
     fontSize: 20
   }
 });

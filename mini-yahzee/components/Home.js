@@ -11,6 +11,7 @@ import {
     BONUS_POINTS
 } from '../constants/Game';
 import { useState } from "react";
+import Style from "../styles/Style";
 
 
 export default function Home ({navigation}) {
@@ -28,7 +29,7 @@ export default function Home ({navigation}) {
     return (
         <>
             <Header/>
-            <View>
+            <View style={Style.gameboard}>
                 <MaterialCommunityIcons 
                     name="information"
                     size={90}
@@ -38,9 +39,9 @@ export default function Home ({navigation}) {
                 <>
                 <Text>For scoreboard enter your name...</Text>
                     <TextInput onChangeText={setPlayerName} autoFocus={true} />
-                    <Pressable
+                    <Pressable style={Style.button}
                     onPress={() => handlePlayerName(playerName)} >
-                        <Text>Ok</Text>
+                        <Text style={Style.buttonText}>Ok</Text>
                     </Pressable>
                 </>
                 :
@@ -68,11 +69,11 @@ export default function Home ({navigation}) {
                     </Text>
                     <Text multiline="true">Copy more text here....</Text>
                     <Text>Good luck, {playerName}</Text>
-                    <Pressable
+                    <Pressable  style={Style.button}
                         onPress={() => navigation.navigate(
                             'Gameboard', {player:playerName})}
                     >
-                        <Text>PLAY</Text>
+                        <Text style={Style.buttonText}>PLAY</Text>
                     </Pressable>
                 </>
             }
